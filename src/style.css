@@ -1623,3 +1623,261 @@ the glyph overshoot, so the wordmark can never paint over the bottom bar. */
     transition-duration: 0.01s !important;
   }
 }
+/* ============ WORK CASE STUDY OVERLAY ============ */
+/* Sits above the nav (160), below the film grain (250) and cursor (400) —
+   same layering logic as the fullscreen menu. */
+.wov {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  display: none;
+  background: var(--ink);
+  color: var(--paper);
+  will-change: transform;
+}
+.wov-scroll {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: var(--paper) var(--ink);
+}
+.wov-inner {
+  padding: clamp(4.5rem, 10vh, 7rem) var(--gut) clamp(4rem, 8vh, 6rem);
+}
+.wov-close {
+  position: absolute;
+  top: calc(var(--gut) * 0.6);
+  right: var(--gut);
+  z-index: 5;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  border: 1px solid var(--dline);
+  background: none;
+  color: var(--paper);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s,
+    transform 0.45s var(--ease);
+}
+.wov-close svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  transform: rotate(45deg); /* the #plus symbol becomes an × */
+}
+.wov-close:hover {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: var(--acc-ink);
+  transform: rotate(135deg);
+}
+.wov-idx {
+  display: block;
+  color: var(--dmut);
+  margin-bottom: 1.6rem;
+}
+.wov-title {
+  font-size: clamp(3rem, 9vw, 8.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.wov-tag {
+  color: var(--acc);
+  margin-bottom: clamp(2rem, 5vh, 3.4rem);
+}
+.wov-hero {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 14px;
+  margin-bottom: clamp(2.4rem, 6vh, 4rem);
+}
+.wov-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+.wov-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 1.8rem 0;
+  border-top: 1px solid var(--dline);
+  border-bottom: 1px solid var(--dline);
+  margin-bottom: clamp(2.4rem, 6vh, 4rem);
+}
+.wov-meta-i {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.wov-meta-i .mono {
+  color: var(--dmut);
+}
+.wov-meta-i strong {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.wov-secs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.6rem, 3vw, 3rem);
+  margin-bottom: clamp(3rem, 7vh, 5rem);
+}
+.wov-sec h3 {
+  color: var(--acc);
+  margin-bottom: 0.9rem;
+}
+.wov-sec p {
+  color: var(--dmut);
+  line-height: 1.65;
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+}
+.wov-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+  margin-bottom: clamp(2.6rem, 6vh, 4rem);
+}
+.wstat {
+  border-top: 1px solid var(--dline);
+  padding-top: 1.2rem;
+}
+.wstat-n {
+  display: block;
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.wstat-l {
+  display: block;
+  margin-top: 0.7rem;
+  color: var(--dmut);
+}
+.wov-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: clamp(2.6rem, 6vh, 4rem);
+}
+.wov-chips span {
+  font-family: "Space Mono", monospace;
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5em 1em;
+  border: 1px solid var(--dline);
+  border-radius: 999px;
+}
+.wov-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.2rem, 2.5vw, 2rem);
+  margin-bottom: clamp(3rem, 7vh, 5rem);
+}
+.wov-gallery figure {
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  border-radius: 14px;
+}
+.wov-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+.wov-gallery figure:hover img {
+  transform: scale(1.04);
+}
+.wov-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--dline);
+  padding-top: clamp(1.8rem, 4vh, 2.6rem);
+}
+.wov-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper);
+  transition: color 0.3s;
+}
+.wov-next:hover {
+  color: var(--acc);
+}
+.wov-next svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  transform: rotate(45deg); /* ↗ becomes → */
+  transition: transform 0.35s var(--ease);
+}
+.wov-next:hover svg {
+  transform: rotate(45deg) translate(3px, -3px);
+}
+
+/* Hover affordance on the work panels */
+.wpanel--case {
+  cursor: pointer;
+}
+.wview {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: var(--acc);
+  color: var(--acc-ink);
+  padding: 0.5em 1em;
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.3s,
+    transform 0.45s var(--ease);
+  pointer-events: none;
+}
+.wpanel--case:hover .wview,
+.wpanel--case:focus-visible .wview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll + nav lock while the overlay is open */
+html.wov-open body {
+  overflow: hidden;
+}
+html.wov-open .nav {
+  visibility: hidden;
+}
+
+@media (max-width: 760px) {
+  .wov-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+  .wov-secs,
+  .wov-results {
+    grid-template-columns: 1fr;
+  }
+  .wov-gallery {
+    grid-template-columns: 1fr;
+  }
+}

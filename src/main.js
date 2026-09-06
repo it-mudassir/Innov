@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { initWorkOverlay } from "./work-overlay.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -354,6 +355,9 @@ $$(".mq-inner").forEach((m) => {
   c.setAttribute("aria-hidden", "true");
   m.appendChild(c);
 });
+
+/* ---------- Work case study overlay ---------- */
+initWorkOverlay({ lenis, scrollToTarget });
 
 /* ---------- Menu ---------- */
 const menuBtn = $("#menuBtn"),
