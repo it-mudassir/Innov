@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>innov. — Technology & Design Studio</title>
+    <meta
+      name="description"
+      content="innov is a technology & design studio building websites, apps, software, SaaS and brands."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" id="metaTheme" content="#F1EFE8" />
+    <!-- Theme bootstrap: runs before CSS paints, so there is no flash of the wrong theme -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("innov-theme");
+          if (t !== "dark" && t !== "light") {
+            t =
+              window.matchMedia &&
+              matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          }
+          document.documentElement.setAttribute("data-theme", t);
+          var m = document.getElementById("metaTheme");
+          if (m)
+            m.setAttribute("content", t === "dark" ? "#131310" : "#F1EFE8");
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body class="is-loading">
+    <!-- SVG symbol library -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <symbol id="ast" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="arr" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M7 17 17 7M9 7h8v8"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="plus" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 5v14M5 12h14"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="tagfree" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M4 11.2V5a1 1 0 0 1 1-1h6.2a2 2 0 0 1 1.4.6l7 7a2 2 0 0 1 0 2.8l-5.2 5.2a2 2 0 0 1-2.8 0l-7-7A2 2 0 0 1 4 11.2Z"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linejoin="round"
+        />
+        <circle cx="8.4" cy="8.4" r="1.3" fill="currentColor" />
+        <path
+          d="M3.5 20.5 20.5 3.5"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="noad" viewBox="0 0 24 24" fill="none">
+        <rect
+          x="3.8"
+          y="3.8"
+          width="16.4"
+          height="16.4"
+          rx="3.2"
+          stroke="currentColor"
+          stroke-width="1.7"
+        />
+        <path
+          d="M6.5 17.5 17.5 6.5"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+        />
+      </symbol>
+      <symbol id="shield" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2.8 5.2 5.5v5.2c0 4.5 2.9 8 6.8 9.5 3.9-1.5 6.8-5 6.8-9.5V5.5L12 2.8Z"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linejoin="round"
+        />
+        <path
+          d="m9 11.8 2.1 2.1 3.9-4.2"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+    </svg>
+
+    <div class="noise" aria-hidden="true"></div>
+
+    <!-- Loader -->
+    <div id="loader" aria-hidden="true">
+      <div class="ld-top">
+        <span class="ld-logo">innov<span class="lg-dot">.</span></span>
+        <span class="mono">Technology &amp; Design Studio</span>
+      </div>
+      <div class="ld-bottom">
+        <span class="mono">Loading —</span>
+        <div class="ld-count"><span id="ldCount">0</span><sup>%</sup></div>
+      </div>
+      <div class="ld-bar"><span id="ldBar"></span></div>
+    </div>
+    <noscript
+      ><style>
+        #loader {
+          display: none;
+        }
+        body.is-loading {
+          overflow: auto;
+          max-height: none;
+        }
+      </style></noscript
+    >
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true">
+      <span class="c-label"></span>
+    </div>
+
+    <!-- Floating service preview -->
+    <div id="svc-preview" aria-hidden="true">
+      <img alt="" /><span class="pv-tag"></span>
+    </div>
+
+    <!-- Nav -->
+    <header class="nav" id="nav">
+      <a href="#top" class="logo">innov<span class="lg-dot">.</span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#studio">Studio</a>
+        <a href="#store">Store</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <button
+          class="theme-btn"
+          id="themeBtn"
+          aria-label="Switch to dark mode"
+          title="Toggle theme"
+        >
+          <svg
+            class="ic ic-sun"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+              stroke="currentColor"
+              stroke-width="1.8"
+            />
+            <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+              />
+            </g>
+          </svg>
+          <svg
+            class="ic ic-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <a href="#contact" class="nav-cta"
+          ><span class="roll"
+            ><span>Start a project</span
+            ><span aria-hidden="true">Start a project</span></span
+          ></a
+        >
+        <button
+          class="menu-btn"
+          id="menuBtn"
+          aria-expanded="false"
+          aria-controls="menu"
+        >
+          <span class="roll"
+            ><span>Menu</span><span aria-hidden="true">Close</span></span
+          >
+        </button>
+      </div>
+    </header>
+
+    <!-- Fullscreen menu -->
+    <div class="menu" id="menu" aria-hidden="true">
+      <nav class="menu-links" aria-label="Menu">
+        <a class="menu-link" href="#services"
+          ><span class="ml-i">01</span
+          ><span class="ml-mask"><span class="ml-t">Services</span></span></a
+        >
+        <a class="menu-link" href="#work"
+          ><span class="ml-i">02</span
+          ><span class="ml-mask"><span class="ml-t">Work</span></span></a
+        >
+        <a class="menu-link" href="#studio"
+          ><span class="ml-i">03</span
+          ><span class="ml-mask"><span class="ml-t">Studio</span></span></a
+        >
+        <a class="menu-link" href="#process"
+          ><span class="ml-i">04</span
+          ><span class="ml-mask"><span class="ml-t">Process</span></span></a
+        >
+        <a class="menu-link" href="#store"
+          ><span class="ml-i">05</span
+          ><span class="ml-mask"><span class="ml-t">Store</span></span></a
+        >
+        <a class="menu-link" href="#contact"
+          ><span class="ml-i">06</span
+          ><span class="ml-mask"><span class="ml-t">Contact</span></span></a
+        >
+      </nav>
+      <div class="menu-foot">
+        <a class="mono" href="mailto:hello@innov.studio">hello@innov.studio</a>
+        <div class="menu-soc">
+          <a
+            href="https://linkedin.com/company/innov"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+          <a href="https://dribbble.com/innov" target="_blank" rel="noopener"
+            >Dribbble</a
+          >
+          <a href="https://instagram.com/innov" target="_blank" rel="noopener"
+            >Instagram</a
+          >
+          <a href="https://github.com/innov" target="_blank" rel="noopener"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <canvas id="dots" aria-hidden="true"></canvas>
+
+        <div class="hero-meta mono">
+          <span>( Technology &amp; Design Studio )</span>
+          <span class="hm-r">Est. 2016 — Working worldwide</span>
+        </div>
+
+        <h1
+          class="hero-h"
+          aria-label="We build websites, apps, software, SaaS and brands people remember."
+        >
+          <span aria-hidden="true">
+            <span class="hline"><span class="hline-in">We build</span></span>
+            <span class="hline hline--ind"
+              ><span class="hline-in">
+                <span class="cycle">
+                  <span class="cycle-track">
+                    <span class="cycle-w">Websites</span
+                    ><span class="cycle-w">Apps</span
+                    ><span class="cycle-w">Software</span
+                    ><span class="cycle-w">SaaS</span
+                    ><span class="cycle-w">Brands</span
+                    ><span class="cycle-w" aria-hidden="true">Websites</span>
+                  </span>
+                  <span class="cycle-m"></span>
+                </span>
+                <svg class="h-ast" aria-hidden="true">
+                  <use href="#ast" />
+                </svg> </span
+            ></span>
+            <span class="hline"
+              ><span class="hline-in"
+                >People
+                <span class="pill-img"
+                  ><img
+                    src="https://picsum.photos/seed/innov-hero/320/120.jpg"
+                    alt=""
+                /></span>
+                remember.</span
+              ></span
+            >
+          </span>
+        </h1>
+
+        <div class="hero-foot">
+          <p class="hero-p">
+            <b>innov</b> is a technology &amp; design studio for ambitious teams
+            — we design, code and ship websites, apps, SaaS platforms and
+            brands, all under one roof.
+          </p>
+          <div class="hero-btns">
+            <a class="btn btn--fill magnetic" href="#contact"
+              ><span class="roll"
+                ><span>Start a project</span
+                ><span aria-hidden="true">Start a project</span></span
+              ></a
+            >
+            <a class="btn btn--ghost magnetic" href="#services"
+              ><span class="roll"
+                ><span>Explore services</span
+                ><span aria-hidden="true">Explore services</span></span
+              ></a
+            >
+          </div>
+          <div class="scroll-hint mono">
+            Scroll<span class="sh-line"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MARQUEE 1 ============ -->
+      <div class="marquee marquee--ink" data-cursor="PAUSE" aria-hidden="true">
+        <div class="mq-inner">
+          <div class="mq-group">
+            <span>Web Development</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>App Development</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>Software &amp; SaaS</span
+            ><svg class="ast"><use href="#ast" /></svg> <span>UI/UX Design</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>Branding &amp; Identity</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>Graphic Design</span
+            ><svg class="ast"><use href="#ast" /></svg> <span>E-Commerce</span
+            ><svg class="ast"><use href="#ast" /></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ SERVICES ============ -->
+      <section id="services" class="sec">
+        <div class="sec-head mono" data-reveal>
+          <span>( 01 — Services )</span><span>05 disciplines, one team</span>
+        </div>
+        <h2 class="sec-title">
+          <span class="st-mask"
+            ><span class="st-in">What we do best</span></span
+          >
+        </h2>
+
+        <div class="srows">
+          <div
+            class="srow"
+            data-img="https://picsum.photos/seed/innov-web/640/460.jpg"
+            data-tag="Web Development"
+          >
+            <button class="srow-head" aria-expanded="false">
+              <span class="sr-num">01</span>
+              <span class="sr-title">Web Development</span>
+              <span class="sr-tags mono">Sites / E-commerce / CMS</span>
+              <span class="sr-ic"
+                ><svg><use href="#plus" /></svg
+              ></span>
+            </button>
+            <div class="srow-body">
+              <div class="srb-in">
+                <div class="srb-grid">
+                  <p>
+                    Marketing sites, e-commerce and web platforms built for
+                    speed. Clean code, obsessive performance budgets and SEO
+                    baked in from the first commit — not bolted on at the end.
+                  </p>
+                  <div class="sr-chips">
+                    <span>React / Next.js</span><span>Node &amp; APIs</span
+                    ><span>Headless CMS</span><span>E-commerce</span
+                    ><span>SEO &amp; Performance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="srow"
+            data-img="https://picsum.photos/seed/innov-app/640/460.jpg"
+            data-tag="App Development"
+          >
+            <button class="srow-head" aria-expanded="false">
+              <span class="sr-num">02</span>
+              <span class="sr-title">App Development</span>
+              <span class="sr-tags mono">iOS / Android / Cross-platform</span>
+              <span class="sr-ic"
+                ><svg><use href="#plus" /></svg
+              ></span>
+            </button>
+            <div class="srow-body">
+              <div class="srb-in">
+                <div class="srb-grid">
+                  <p>
+                    Native-feel iOS and Android apps from one codebase. We
+                    handle the full loop — architecture, offline sync, payments,
+                    push notifications and store review — through to release
+                    day.
+                  </p>
+                  <div class="sr-chips">
+                    <span>iOS &amp; Android</span
+                    ><span>React Native / Flutter</span
+                    ><span>Offline-first</span><span>Push &amp; Payments</span
+                    ><span>Store launch</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="srow"
+            data-img="https://picsum.photos/seed/innov-saas/640/460.jpg"
+            data-tag="Software &amp; SaaS"
+          >
+            <button class="srow-head" aria-expanded="false">
+              <span class="sr-num">03</span>
+              <span class="sr-title">Software &amp; SaaS</span>
+              <span class="sr-tags mono">Cloud / Dashboards / APIs</span>
+              <span class="sr-ic"
+                ><svg><use href="#plus" /></svg
+              ></span>
+            </button>
+            <div class="srow-body">
+              <div class="srb-in">
+                <div class="srb-grid">
+                  <p>
+                    From MVP to enterprise: multi-tenant architecture,
+                    dashboards, auth, billing and the DevOps that keeps it all
+                    humming at 3am. Built to scale, priced to start.
+                  </p>
+                  <div class="sr-chips">
+                    <span>Cloud architecture</span><span>Multi-tenant</span
+                    ><span>Dashboards</span><span>Auth &amp; billing</span
+                    ><span>DevOps &amp; CI/CD</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="srow"
+            data-img="https://picsum.photos/seed/innov-ui/640/460.jpg"
+            data-tag="UI/UX Design"
+          >
+            <button class="srow-head" aria-expanded="false">
+              <span class="sr-num">04</span>
+              <span class="sr-title">UI/UX Design</span>
+              <span class="sr-tags mono">Research / Systems / Motion</span>
+              <span class="sr-ic"
+                ><svg><use href="#plus" /></svg
+              ></span>
+            </button>
+            <div class="srow-body">
+              <div class="srb-in">
+                <div class="srb-grid">
+                  <p>
+                    Interfaces people don't have to think about. Research,
+                    flows, wireframes and design systems — prototyped, tested
+                    with real users and handed off pixel-perfect.
+                  </p>
+                  <div class="sr-chips">
+                    <span>Research &amp; testing</span><span>Wireframes</span
+                    ><span>Design systems</span><span>Prototyping</span
+                    ><span>Motion design</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="srow"
+            data-img="https://picsum.photos/seed/innov-brand/640/460.jpg"
+            data-tag="Branding &amp; Graphic Design"
+          >
+            <button class="srow-head" aria-expanded="false">
+              <span class="sr-num">05</span>
+              <span class="sr-title">Branding &amp; Graphic Design</span>
+              <span class="sr-tags mono">Identity / Print / Social</span>
+              <span class="sr-ic"
+                ><svg><use href="#plus" /></svg
+              ></span>
+            </button>
+            <div class="srow-body">
+              <div class="srb-in">
+                <div class="srb-grid">
+                  <p>
+                    Identities with a point of view. Logo, type, colour,
+                    guidelines — then everywhere it lives: decks, packaging,
+                    social kits, print and motion.
+                  </p>
+                  <div class="sr-chips">
+                    <span>Logo &amp; identity</span><span>Guidelines</span
+                    ><span>Packaging &amp; print</span><span>Social kits</span
+                    ><span>Illustration &amp; motion</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WORK ============ -->
+      <section id="work" class="sec sec--work">
+        <div class="work-pin">
+          <div class="work-track" id="workTrack">
+            <div class="wpanel wpanel--intro">
+              <span class="mono" style="color: var(--mut)"
+                >( 02 — Selected work )</span
+              >
+              <h2 class="wintro-t">Selected<br />work</h2>
+              <p class="wintro-p mono">
+                05 projects / 2023 — 2025<br />Keep scrolling — it moves
+                sideways
+              </p>
+            </div>
+
+            <article class="wpanel">
+              <figure class="wimg">
+                <img
+                  src="https://picsum.photos/seed/innov-fintech/1100/720.jpg"
+                  alt="Nexora fintech platform interface"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="widx mono">01 / 05</span>
+              </figure>
+              <div class="wmeta">
+                <h3>Nexora</h3>
+                <span class="mono">Fintech SaaS — 2025</span>
+              </div>
+            </article>
+
+            <article class="wpanel">
+              <figure class="wimg">
+                <img
+                  src="https://picsum.photos/seed/innov-pulse/1100/720.jpg"
+                  alt="Pulse health and fitness app"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="widx mono">02 / 05</span>
+              </figure>
+              <div class="wmeta">
+                <h3>Pulse</h3>
+                <span class="mono">Health app — 2024</span>
+              </div>
+            </article>
+
+            <article class="wpanel">
+              <figure class="wimg">
+                <img
+                  src="https://picsum.photos/seed/innov-atlas/1100/720.jpg"
+                  alt="Atlas & Co brand identity"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="widx mono">03 / 05</span>
+              </figure>
+              <div class="wmeta">
+                <h3>Atlas &amp; Co</h3>
+                <span class="mono">Brand identity — 2024</span>
+              </div>
+            </article>
+
+            <article class="wpanel">
+              <figure class="wimg">
+                <img
+                  src="https://picsum.photos/seed/innov-loop/1100/720.jpg"
+                  alt="Loopmart e-commerce experience"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="widx mono">04 / 05</span>
+              </figure>
+              <div class="wmeta">
+                <h3>Loopmart</h3>
+                <span class="mono">E-commerce — 2023</span>
+              </div>
+            </article>
+
+            <article class="wpanel">
+              <figure class="wimg">
+                <img
+                  src="https://picsum.photos/seed/innov-orbit/1100/720.jpg"
+                  alt="Orbitly developer analytics tool"
+                  loading="lazy"
+                  decoding="async"
+                /><span class="widx mono">05 / 05</span>
+              </figure>
+              <div class="wmeta">
+                <h3>Orbitly</h3>
+                <span class="mono">Developer tool — 2023</span>
+              </div>
+            </article>
+
+            <div class="wpanel wpanel--outro">
+              <p class="mono">( Want work like this? )</p>
+              <a class="btn btn--acc magnetic" href="#contact"
+                ><span class="roll"
+                  ><span>Start yours</span
+                  ><span aria-hidden="true">Start yours</span></span
+                ></a
+              >
+            </div>
+          </div>
+          <div class="work-progress"><span id="workBar"></span></div>
+        </div>
+      </section>
+
+      <!-- ============ MARQUEE 2 ============ -->
+      <div class="marquee marquee--acc" data-cursor="PAUSE" aria-hidden="true">
+        <div class="mq-inner">
+          <div class="mq-group">
+            <span>Available for new projects</span
+            ><svg class="ast"><use href="#ast" /></svg> <span>Let's talk</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>Free tools at innov store</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>hello@innov.studio</span
+            ><svg class="ast"><use href="#ast" /></svg>
+            <span>Remote-first, worldwide</span
+            ><svg class="ast"><use href="#ast" /></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ STUDIO ============ -->
+      <section id="studio" class="sec dark">
+        <div class="sec-head mono" data-reveal>
+          <span>( 03 — Studio )</span><span>Who we are</span>
+        </div>
+        <p class="scrub">
+          innov is a compact team of engineers and designers. We take products
+          from first sketch to shipped code — websites, apps, SaaS platforms and
+          the brands around them — with one team and zero hand-offs.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-n" data-n="128"><b>0</b><em>+</em></span
+            ><span class="stat-l mono">Projects shipped</span>
+          </div>
+          <div class="stat">
+            <span class="stat-n" data-n="9" data-pad="1"><b>00</b></span
+            ><span class="stat-l mono">Years running</span>
+          </div>
+          <div class="stat">
+            <span class="stat-n" data-n="46"><b>0</b><em>+</em></span
+            ><span class="stat-l mono">Happy clients</span>
+          </div>
+          <div class="stat">
+            <span class="stat-n" data-n="98"><b>0</b><em>%</em></span
+            ><span class="stat-l mono">Return rate</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROCESS ============ -->
+      <section id="process" class="sec">
+        <div class="sec-head mono" data-reveal>
+          <span>( 04 — Process )</span><span>Idea → launch</span>
+        </div>
+        <h2 class="sec-title">
+          <span class="st-mask"><span class="st-in">How we ship</span></span>
+        </h2>
+        <div class="steps">
+          <div class="steps-track"><span class="steps-fill"></span></div>
+          <div class="step" data-reveal>
+            <span class="step-n mono">01</span>
+            <div>
+              <h3>Discover</h3>
+              <p>
+                Workshops, research and technical scoping. We map the problem
+                properly before anyone touches a pixel.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-reveal>
+            <span class="step-n mono">02</span>
+            <div>
+              <h3>Design</h3>
+              <p>
+                UX flows, UI systems and interactive prototypes — reviewed with
+                you, iterated fast, signed off together.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-reveal>
+            <span class="step-n mono">03</span>
+            <div>
+              <h3>Build</h3>
+              <p>
+                Clean, tested code in weekly sprints with staging links you can
+                actually click. You see progress, not promises.
+              </p>
+            </div>
+          </div>
+          <div class="step" data-reveal>
+            <span class="step-n mono">04</span>
+            <div>
+              <h3>Launch &amp; grow</h3>
+              <p>
+                Deployment, analytics and ongoing iteration. Shipping is the
+                starting line, not the finish.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ INNOV STORE ============ -->
+      <!-- TODO: replace the placeholder href below with the real store URL -->
+      <section id="store" class="sec">
+        <div class="sec-head mono" data-reveal>
+          <span>( 05 — innov store )</span><span>Free forever</span>
+        </div>
+        <div class="store-grid">
+          <div class="store-info">
+            <h2 class="sec-title">
+              <span class="st-mask"
+                ><span class="st-in">Skip the invoice.</span></span
+              >
+              <span class="st-mask"
+                ><span class="st-in"
+                  >Take it from <span class="outl-acc">the store.</span></span
+                ></span
+              >
+            </h2>
+            <p class="store-p" data-reveal>
+              The innov store is our public shelf — templates, UI kits, tools
+              and starter code pulled from real client work. Finished,
+              documented and given away: download what you need and ship it.
+            </p>
+            <div data-reveal>
+              <a
+                class="btn btn--acc magnetic"
+                href="https://store.innov.studio"
+                target="_blank"
+                rel="noopener"
+                data-cursor="STORE"
+              >
+                <span class="roll"
+                  ><span>Visit innov store</span
+                  ><span aria-hidden="true">Visit innov store</span></span
+                >
+              </a>
+              <span class="store-note mono"
+                >New drops monthly — no account, no email required</span
+              >
+            </div>
+          </div>
+          <ul class="store-points">
+            <li class="store-point" data-reveal>
+              <span class="sp-ic"
+                ><svg aria-hidden="true"><use href="#tagfree" /></svg
+              ></span>
+              <div>
+                <h3>Free of cost</h3>
+                <p>
+                  Every download and every update, completely free. No trials,
+                  no pro tiers, no paywalls hiding the good parts.
+                </p>
+              </div>
+              <span class="sp-n mono">01</span>
+            </li>
+            <li class="store-point" data-reveal>
+              <span class="sp-ic"
+                ><svg aria-hidden="true"><use href="#noad" /></svg
+              ></span>
+              <div>
+                <h3>Zero ads</h3>
+                <p>
+                  The store is clean: nothing tracked, nothing sponsored,
+                  nothing blinking for your attention. You get the file — that's
+                  it.
+                </p>
+              </div>
+              <span class="sp-n mono">02</span>
+            </li>
+            <li class="store-point" data-reveal>
+              <span class="sp-ic"
+                ><svg aria-hidden="true"><use href="#shield" /></svg
+              ></span>
+              <div>
+                <h3>Privacy protected</h3>
+                <p>
+                  No sign-up walls and no data harvesting. Downloads don't
+                  follow you home, and we never sell a byte.
+                </p>
+              </div>
+              <span class="sp-n mono">03</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT / CTA ============ -->
+      <section id="contact" class="sec dark cta">
+        <div class="sec-head mono" data-reveal>
+          <span>( 06 — Contact )</span><span>Response within 24h</span>
+        </div>
+        <h2 class="cta-h">
+          <span class="st-mask"><span class="st-in">Got a project</span></span>
+          <span class="st-mask"><span class="st-in">in mind? Let's</span></span>
+          <span class="st-mask"
+            ><span class="st-in cta-outl">innovate.</span></span
+          >
+        </h2>
+        <div class="cta-row" data-reveal>
+          <a class="cta-mail" href="mailto:hello@innov.studio"
+            >hello@innov.studio <svg aria-hidden="true"><use href="#arr" /></svg
+          ></a>
+          <p class="mono cta-note">
+            Currently taking new projects — worldwide, remote-first
+          </p>
+        </div>
+        <div class="badge-wrap">
+          <a
+            class="badge magnetic"
+            href="mailto:hello@innov.studio"
+            aria-label="Start a project — email us"
+          >
+            <svg class="badge-rot" viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <path
+                  id="circ"
+                  d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"
+                />
+              </defs>
+              <text>
+                <textPath href="#circ">
+                  START A PROJECT — START A PROJECT — START A PROJECT —
+                </textPath>
+              </text>
+            </svg>
+            <svg class="badge-arr" aria-hidden="true"><use href="#arr" /></svg>
+          </a>
+        </div>
+      </section>
+    </main>
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="f-top">
+        <div class="f-col f-col--about">
+          <span class="f-logo">innov<span class="lg-dot">.</span></span>
+          <p>
+            Independent technology &amp; design studio. We build websites, apps,
+            software, SaaS and brands — end to end.
+          </p>
+        </div>
+        <div class="f-col">
+          <span class="f-h mono">Sitemap</span>
+          <a href="#services">Services</a><a href="#work">Work</a
+          ><a href="#studio">Studio</a><a href="#process">Process</a
+          ><a href="#store">Store</a><a href="#contact">Contact</a>
+        </div>
+        <div class="f-col">
+          <span class="f-h mono">Socials</span>
+          <a
+            href="https://linkedin.com/company/innov"
+            target="_blank"
+            rel="noopener"
+            >LinkedIn</a
+          >
+          <a href="https://dribbble.com/innov" target="_blank" rel="noopener"
+            >Dribbble</a
+          >
+          <a href="https://instagram.com/innov" target="_blank" rel="noopener"
+            >Instagram</a
+          >
+          <a href="https://github.com/innov" target="_blank" rel="noopener"
+            >GitHub</a
+          >
+        </div>
+        <div class="f-col">
+          <span class="f-h mono">Contact</span>
+          <a href="mailto:hello@innov.studio">hello@innov.studio</a>
+          <a href="mailto:hello@innov.studio?subject=New%20project%20inquiry"
+            >Book a project</a
+          >
+        </div>
+      </div>
+      <div class="f-mark" aria-label="innov">
+        <span aria-hidden="true">i</span><span aria-hidden="true">n</span
+        ><span aria-hidden="true">n</span><span aria-hidden="true">o</span
+        ><span aria-hidden="true">v</span
+        ><span class="f-reg" aria-hidden="true">®</span>
+      </div>
+      <div class="f-bot mono">
+        <span>© 2025 innov studio — all rights reserved</span>
+        <span>Local time — <span id="clock">00:00:00</span></span>
+        <button class="totop" id="toTop">
+          Back to top <svg aria-hidden="true"><use href="#arr" /></svg>
+        </button>
+      </div>
+    </footer>
+  </body>
+</html>
