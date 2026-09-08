@@ -1,0 +1,17 @@
+{
+  "name": "innov. — Technology & Design Studio",
+  "short_name": "innov.",
+  "description": "Technology and design studio building websites, apps, software, SaaS products and brands.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F1EFE8",
+  "theme_color": "#F1EFE8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

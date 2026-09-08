@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F1EFE8"/>
+  <circle cx="1040" cy="90" r="260" fill="#ff6a00"/>
+  <path d="M0 560 280 280 520 520 760 260 1200 620V630H0Z" fill="#141412"/>
+  <text x="76" y="184" fill="#141412" font-family="Georgia, serif" font-size="112" font-weight="700">innov.</text>
+  <text x="82" y="252" fill="#141412" font-family="Arial, sans-serif" font-size="27" letter-spacing="4">TECHNOLOGY &amp; DESIGN STUDIO</text>
+  <text x="82" y="570" fill="#F1EFE8" font-family="Arial, sans-serif" font-size="26">Websites · Apps · SaaS · Brands</text>
+</svg>
